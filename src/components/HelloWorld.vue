@@ -2,6 +2,8 @@
   <div class="hello">
     <app-info></app-info>
     <h1>{{ msg }}</h1>
+    <h3>Timeline Data</h3>
+    <h4>{{timeline}}</h4>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -33,12 +35,19 @@
 
 <script>
 
+import axios from 'axios';
 import User from './User.vue';
 
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    timeline: String,
+  },
+  mounted () {
+    axios
+      .get('http://localhost:8000/timeline?count=100')
+      .then(response => (this.timeline = response))
   },
   components: {
     'app-info': User
